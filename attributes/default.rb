@@ -49,7 +49,7 @@ default["docker"]["zypper"]["key"] = "#{node["docker"]["zypper"]["repo"]}repodat
 
 default["docker"]["apt"]["enabled"] = node["platform"] == "ubuntu"
 default["docker"]["apt"]["alias"] = "docker"
-default["docker"]["apt"]["repo"] = "https://get.docker.com/"
+default["docker"]["apt"]["repo"] = "https://get.docker.com/ubuntu"
 default["docker"]["apt"]["keyserver"] = "hkp://keyserver.ubuntu.com:80"
 default["docker"]["apt"]["key"] = "36A1D7869245C8950F966E92D8576A8BA88D21E9"
 default["docker"]["apt"]["distribution"] = "docker"
