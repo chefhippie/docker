@@ -78,6 +78,10 @@ template node["docker"]["sysconfig_file"] do
 end
 
 service "docker" do
+  if node["platform"] == "ubuntu"
+    provider Chef::Provider::Service::Upstart
+  end
+
   service_name node["docker"]["service_name"]
   action [:enable, :start]
 end
