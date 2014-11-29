@@ -32,6 +32,23 @@ when "suse"
       node["docker"]["zypper"]["enabled"]
     end
   end
+when "debian"
+  include_recipe "apt"
+
+  apt_repository node["docker"]["apt"]["alias"] do
+    uri node["docker"]["apt"]["repo"]
+    distribution node["docker"]["apt"]["distribution"]
+    components node["docker"]["apt"]["components"]
+    keyserver node["docker"]["apt"]["keyserver"]
+    key node["docker"]["apt"]["key"]
+    source false
+
+    action :add
+
+    only_if do
+      node["docker"]["apt"]["enabled"]
+    end
+  end
 end
 
 node["docker"]["packages"].each do |name|

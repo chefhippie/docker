@@ -19,10 +19,10 @@
 
 default["docker"]["packages"] = value_for_platform_family(
   "debian" => %w(
-    docker
+    lxc-docker
   ),
   "ubuntu" => %w(
-    docker
+    lxc-docker
   ),
   "suse" => %w(
     docker
@@ -46,3 +46,11 @@ default["docker"]["zypper"]["alias"] = "virtualization"
 default["docker"]["zypper"]["title"] = "Virtualization"
 default["docker"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/Virtualization/openSUSE_#{node["platform_version"]}/"
 default["docker"]["zypper"]["key"] = "#{node["docker"]["zypper"]["repo"]}repodata/repomd.xml.key"
+
+default["docker"]["apt"]["enabled"] = node["platform"] == "ubuntu"
+default["docker"]["apt"]["alias"] = "docker"
+default["docker"]["apt"]["repo"] = "https://get.docker.com/"
+default["docker"]["apt"]["keyserver"] = "hkp://keyserver.ubuntu.com:80"
+default["docker"]["apt"]["key"] = "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+default["docker"]["apt"]["distribution"] = "docker"
+default["docker"]["apt"]["components"] = ["main"]
