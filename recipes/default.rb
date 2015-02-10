@@ -60,7 +60,7 @@ end
 group node["docker"]["group"] do
   members node["docker"]["users"]
   append true
-  
+
   action :modify
 end
 
@@ -78,7 +78,8 @@ template node["docker"]["sysconfig_file"] do
 end
 
 service "docker" do
-  if node["platform"] == "ubuntu"
+  case node["platform"]
+  when "ubuntu"
     provider Chef::Provider::Service::Upstart
   end
 

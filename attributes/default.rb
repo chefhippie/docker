@@ -21,9 +21,6 @@ default["docker"]["packages"] = value_for_platform_family(
   "debian" => %w(
     lxc-docker
   ),
-  "ubuntu" => %w(
-    lxc-docker
-  ),
   "suse" => %w(
     docker
   )
@@ -31,7 +28,6 @@ default["docker"]["packages"] = value_for_platform_family(
 
 default["docker"]["sysconfig_file"] = value_for_platform_family(
   "debian" => "/etc/default/docker",
-  "ubuntu" => "/etc/default/docker",
   "suse" => "/etc/sysconfig/docker"
 )
 
