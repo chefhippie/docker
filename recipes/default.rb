@@ -26,7 +26,7 @@ when "suse"
     key node["docker"]["zypper"]["key"]
     title node["docker"]["zypper"]["title"]
 
-    action :add
+    action [:add, :refresh]
 
     only_if do
       node["docker"]["zypper"]["enabled"]
@@ -43,7 +43,7 @@ when "debian"
     key node["docker"]["apt"]["key"]
     source false
 
-    action :add
+    action [:add, :refresh]
 
     only_if do
       node["docker"]["apt"]["enabled"]
