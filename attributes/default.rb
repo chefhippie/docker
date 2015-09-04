@@ -40,7 +40,7 @@ default["docker"]["group"] = "docker"
 default["docker"]["zypper"]["enabled"] = true
 default["docker"]["zypper"]["alias"] = "virtualization"
 default["docker"]["zypper"]["title"] = "Virtualization"
-default["docker"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/Virtualization/openSUSE_#{node["platform_version"].to_i.to_s == node["platform_version"] ? "Tumbleweed" : "openSUSE_#{node["platform_version"]}"}/"
+default["docker"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/Virtualization/openSUSE_#{node["platform_version"].to_i.to_s == node["platform_version"] ? "Tumbleweed" : node["platform_version"]}/"
 default["docker"]["zypper"]["key"] = "#{node["docker"]["zypper"]["repo"]}repodata/repomd.xml.key"
 
 default["docker"]["apt"]["enabled"] = node["platform"] == "ubuntu"
