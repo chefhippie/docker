@@ -37,16 +37,30 @@ default["docker"]["daemon_opts"] = ""
 default["docker"]["users"] = %w()
 default["docker"]["group"] = "docker"
 
-default["docker"]["zypper"]["enabled"] = true
-default["docker"]["zypper"]["alias"] = "virtualization"
-default["docker"]["zypper"]["title"] = "Virtualization"
-default["docker"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/Virtualization/openSUSE_#{node["platform_version"].to_i.to_s == node["platform_version"] ? "Tumbleweed" : node["platform_version"]}/"
-default["docker"]["zypper"]["key"] = "#{node["docker"]["zypper"]["repo"]}repodata/repomd.xml.key"
+case node["platform_family"]
+when "suse"
+  repo = case node["platform_version"]
+  when /\A13\.\d+\z/
+    "openSUSE_#{node["platform_version"]}"
+  when /\A42\.\d+\z/
+    "openSUSE_Leap_#{node["platform_version"]}"
+  when /\A\d{8}\z/
+    "openSUSE_Tumbleweed"
+  else
+    raise "Unsupported SUSE version"
+  end
 
-default["docker"]["apt"]["enabled"] = node["platform"] == "ubuntu"
-default["docker"]["apt"]["alias"] = "docker"
-default["docker"]["apt"]["repo"] = "https://get.docker.com/ubuntu"
-default["docker"]["apt"]["keyserver"] = "hkp://keyserver.ubuntu.com:80"
-default["docker"]["apt"]["key"] = "36A1D7869245C8950F966E92D8576A8BA88D21E9"
-default["docker"]["apt"]["distribution"] = "docker"
-default["docker"]["apt"]["components"] = ["main"]
+  default["docker"]["zypper"]["enabled"] = true
+  default["docker"]["zypper"]["alias"] = "virtualization"
+  default["docker"]["zypper"]["title"] = "Virtualization"
+  default["docker"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/Virtualization/#{repo}/"
+  default["docker"]["zypper"]["key"] = "#{node["docker"]["zypper"]["repo"]}repodata/repomd.xml.key"
+when "debian"
+  default["docker"]["apt"]["enabled"] = node["platform"] == "ubuntu"
+  default["docker"]["apt"]["alias"] = "docker"
+  default["docker"]["apt"]["repo"] = "https://get.docker.com/ubuntu"
+  default["docker"]["apt"]["keyserver"] = "hkp://keyserver.ubuntu.com:80"
+  default["docker"]["apt"]["key"] = "36A1D7869245C8950F966E92D8576A8BA88D21E9"
+  default["docker"]["apt"]["distribution"] = "docker"
+  default["docker"]["apt"]["components"] = ["main"]
+end
